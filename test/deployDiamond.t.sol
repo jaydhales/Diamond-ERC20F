@@ -19,7 +19,7 @@ contract DiamondDeployer is DiamondUtils, IDiamondCut {
     OwnershipFacet ownerF;
     ERC20 erc20F;
 
-    function testDeployDiamond() public {
+    function setUp() public {
         //deploy facets
         dCutFacet = new DiamondCutFacet();
         diamond = new Diamond(address(this), address(dCutFacet), "JayToken", "JAY", 18);
@@ -64,7 +64,6 @@ contract DiamondDeployer is DiamondUtils, IDiamondCut {
     }
 
     function testName() public {
-        testDeployDiamond();
         assertEq(ERC20(address(diamond)).name(), "JayToken");
     }
 
