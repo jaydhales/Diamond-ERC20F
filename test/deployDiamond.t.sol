@@ -11,6 +11,10 @@ import "../contracts/facets/ERC20Facet.sol";
 
 import "./helpers/DiamondUtils.sol";
 
+interface Iwrong {
+    function nonExist() external view returns (uint256);
+}
+
 contract DiamondDeployer is DiamondUtils, IDiamondCut {
     //contract types of facets to be deployed
     Diamond diamond;
@@ -68,6 +72,11 @@ contract DiamondDeployer is DiamondUtils, IDiamondCut {
 
         //call a function
         DiamondLoupeFacet(address(diamond)).facetAddresses();
+    }
+
+    function testInvalid() public {
+        vm.expectRevert("Diamond: Function does not exist");
+        Iwrong(address(diamond)).nonExist();
     }
 
     function testName() public {
